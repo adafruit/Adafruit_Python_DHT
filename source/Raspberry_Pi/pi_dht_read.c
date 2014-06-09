@@ -21,22 +21,19 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-#include <bcm2835.h>
-
 #include "pi_dht_read.h"
+#include "pi_mmio.h"
 
 // This is the only processor specific magic value, the maximum amount of time to
 // spin in a loop before bailing out and considering the read a timeout.  This should
 // be a high value, but if you're running on a much faster platform than a Raspberry
 // Pi or Beaglebone Black then it might need to be increased.
-#define DHT_MAXCOUNT 16000
+#define DHT_MAXCOUNT 32000
 
 // Number of bit pulses to expect from the DHT.  Note that this is 41 because
 // the first pulse is a constant 50 microsecond pulse, with 40 pulses to represent
 // the data afterwards.
 #define DHT_PULSES 41
-
-static bool initialized = false;
 
 int pi_dht_read(int type, int pin, float* humidity, float* temperature) {
   // Validate humidity and temperature arguments and set them to zero.
@@ -47,11 +44,8 @@ int pi_dht_read(int type, int pin, float* humidity, float* temperature) {
   *humidity = 0.0f;
 
   // Initialize GPIO library.
-  if (!initialized) {
-    if (!bcm2835_init()) {
-      return DHT_ERROR_GPIO;
-    }
-    initialized = true;
+  if (pi_mmio_init() < 0) {
+    return DHT_ERROR_GPIO;
   }
 
   // Store the count that each DHT bit pulse is low and high.
@@ -59,28 +53,31 @@ int pi_dht_read(int type, int pin, float* humidity, float* temperature) {
   int pulseCounts[DHT_PULSES*2] = {0};
 
   // Set pin to output.
-  bcm2835_gpio_fsel(pin, BCM2835_GPIO_FSEL_OUTP);
+  pi_mmio_set_output(pin);
 
   // Bump up process priority and change scheduler to try to try to make process more 'real time'.
   set_max_priority();
 
   // Set pin high for ~500 milliseconds.
-  bcm2835_gpio_write(pin, HIGH);
+  pi_mmio_set_high(pin);
   sleep_milliseconds(500);
 
   // The next calls are timing critical and care should be taken
   // to ensure no unnecssary work is done below.
 
   // Set pin low for ~20 milliseconds.
-  bcm2835_gpio_write(pin, LOW);
+  pi_mmio_set_low(pin);
   busy_wait_milliseconds(20);
 
   // Set pin at input.
-  bcm2835_gpio_fsel(pin, BCM2835_GPIO_FSEL_INPT);
+  pi_mmio_set_input(pin);
+  // Need a very short delay before reading pins or else value is sometimes still low.
+  for (volatile int i = 0; i < 50; ++i) {
+  }
 
   // Wait for DHT to pull pin low.
   uint32_t count = 0;
-  while (bcm2835_gpio_lev(pin)) {
+  while (pi_mmio_input(pin)) {
     if (++count >= DHT_MAXCOUNT) {
       // Timeout waiting for response.
       set_default_priority();
@@ -91,7 +88,7 @@ int pi_dht_read(int type, int pin, float* humidity, float* temperature) {
   // Record pulse widths for the expected result bits.
   for (int i=0; i < DHT_PULSES*2; i+=2) {
     // Count how long pin is low and store in pulseCounts[i]
-    while (!bcm2835_gpio_lev(pin)) {
+    while (!pi_mmio_input(pin)) {
       if (++pulseCounts[i] >= DHT_MAXCOUNT) {
         // Timeout waiting for response.
         set_default_priority();
@@ -99,7 +96,7 @@ int pi_dht_read(int type, int pin, float* humidity, float* temperature) {
       }
     }
     // Count how long pin is high and store in pulseCounts[i+1]
-    while (bcm2835_gpio_lev(pin)) {
+    while (pi_mmio_input(pin)) {
       if (++pulseCounts[i+1] >= DHT_MAXCOUNT) {
         // Timeout waiting for response.
         set_default_priority();

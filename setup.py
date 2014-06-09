@@ -27,8 +27,8 @@ else:
 extensions = []
 if platform == platform_detect.RASPBERRY_PI:
 	extensions.append(Extension("Adafruit_DHT.Raspberry_Pi_Driver", 
-								["source/_Raspberry_Pi_Driver.c", "source/common_dht_read.c", "source/Raspberry_Pi/pi_dht_read.c"], 
-								libraries=['bcm2835', 'rt'],
+								["source/_Raspberry_Pi_Driver.c", "source/common_dht_read.c", "source/Raspberry_Pi/pi_dht_read.c", "source/Raspberry_Pi/pi_mmio.c"], 
+								libraries=['rt'],
 								extra_compile_args=['-std=gnu99']))
 elif platform == platform_detect.BEAGLEBONE_BLACK:
 	extensions.append(Extension("Adafruit_DHT.Beaglebone_Black_Driver",
