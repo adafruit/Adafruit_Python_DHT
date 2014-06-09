@@ -32,7 +32,8 @@ pin = 'P8_11'
 # connected to pin 23.
 #pin = 23
 
-# Try to grab a sensor reading.
+# Try to grab a sensor reading.  Use the read_retry method which will retry up
+# to 15 times to get a sensor reading (waiting 2 seconds between each retry).
 humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
 
 # Note that sometimes you won't get a reading and
