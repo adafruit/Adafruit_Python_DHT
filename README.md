@@ -12,23 +12,6 @@ apt-get update
 sudo apt-get install build-essential python-dev
 ````
 
-On a Raspberry Pi this library depends on the following library:
-
--   [bcm2835](http://www.airspayce.com/mikem/bcm2835/)
-    
-    -   Install the library by following these steps:
-        
-        ````
-        wget http://www.airspayce.com/mikem/bcm2835/bcm2835-1.36.tar.gz
-        tar zxvf bcm2835-1.36.tar.gz
-        cd bcm2835-1.36
-        ./configure
-        make
-        sudo make install
-        ````
-
-On a Beaglebone Black there are no other dependencies.
-
 Install the library by downloading with the download link on the right, unzipping the archive, and executing:
 
 ````
