@@ -42,7 +42,7 @@ def platform_detect(plat=platform.platform()):
 	# Handle Beaglebone Black
 	# Platform output on Ubuntu ~July 2014:
 	# Linux-3.8.13-bone56-armv7l-with-Ubuntu-14.04-trusty
-	elif plat.lower().find('armv7l-with-Ubuntu') > -1:
+	elif plat.lower().find('armv7l-with-ubuntu') > -1:
 		return BEAGLEBONE_BLACK	
 	else:
 		return UNKNOWN
