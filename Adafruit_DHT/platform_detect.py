@@ -37,6 +37,9 @@ def platform_detect(plat=platform.platform()):
 	# Handle pidora distribution.
 	elif plat.lower().find('raspberry_pi') > -1:
 		return RASPBERRY_PI
+	# Handle arch distribution.
+	elif plat.lower().find('arch-armv6l') > -1:
+		return RASPBERRY_PI
 	# Handle Beaglebone Black
 	# Platform output on Debian ~May 2014:
 	# Linux-3.8.13-bone47-armv7l-with-debian-7.4
@@ -47,5 +50,7 @@ def platform_detect(plat=platform.platform()):
 	# Linux-3.8.13-bone56-armv7l-with-Ubuntu-14.04-trusty
 	elif plat.lower().find('armv7l-with-ubuntu') > -1:
 		return BEAGLEBONE_BLACK	
+	elif plat.lower().find('armv7l-with-glibc2.4') > -1:
+		return BEAGLEBONE_BLACK
 	else:
 		return UNKNOWN
