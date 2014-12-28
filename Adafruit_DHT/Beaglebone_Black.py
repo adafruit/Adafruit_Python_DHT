@@ -20,8 +20,8 @@
 # SOFTWARE.
 import re
 
-import common
-import Beaglebone_Black_Driver as driver
+import Adafruit_DHT.common as common
+import Adafruit_DHT.Beaglebone_Black_Driver as driver
 
 
 # Define mapping of pin names to GPIO base and number.

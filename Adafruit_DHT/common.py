@@ -20,7 +20,7 @@
 # SOFTWARE.
 import time
 
-import platform_detect
+import Adafruit_DHT.platform_detect as platform_detect
 
 
 # Define error constants.
@@ -42,10 +42,10 @@ def get_platform():
 	"""Return a DHT platform interface for the currently detected platform."""
 	plat = platform_detect.platform_detect()
 	if plat == platform_detect.RASPBERRY_PI:
-		import Raspberry_Pi
+		import Adafruit_DHT.Raspberry_Pi as Raspberry_Pi
 		return Raspberry_Pi
 	elif plat == platform_detect.BEAGLEBONE_BLACK:
-		import Beaglebone_Black
+		import Adafruit_DHT.Beaglebone_Black as Beaglebone_Black
 		return Beaglebone_Black
 	else:
 		raise RuntimeError('Unknown platform.')
