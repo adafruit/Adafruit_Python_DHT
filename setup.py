@@ -40,7 +40,7 @@ elif platform == 'TEST':
 								["source/_Test_Driver.c", "source/Test/test_dht_read.c"],
 								extra_compile_args=['-std=gnu99']))
 else:
-	print 'Could not detect if running on the Raspberry Pi or Beaglebone Black.  If this failure is unexpected, you can run again with --force-pi or --force-bbb parameter to force using the Raspberry Pi or Beaglebone Black respectively.'
+	print('Could not detect if running on the Raspberry Pi or Beaglebone Black.  If this failure is unexpected, you can run again with --force-pi or --force-bbb parameter to force using the Raspberry Pi or Beaglebone Black respectively.')
 	sys.exit(1)
 
 # Call setuptools setup function to install package.
