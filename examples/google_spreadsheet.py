@@ -33,7 +33,8 @@ import datetime
 import Adafruit_DHT
 import gspread
 
-# Type of sensor, can be Adafruit_DHT.DHT11, Adafruit_DHT.DHT22, or Adafruit_DHT.AM2302.
+# Type of sensor, can be Adafruit_DHT.DHT11, Adafruit_DHT.DHT22,
+# Adafruit_DHT.AM2302, or Adafruit_DHT.AM2321
 DHT_TYPE = Adafruit_DHT.DHT22
 
 # Example of sensor connected to Raspberry Pi pin 23
@@ -81,7 +82,7 @@ while True:
 
 	print 'Temperature: {0:0.1f} C'.format(temp)
 	print 'Humidity:    {0:0.1f} %'.format(humidity)
- 
+
 	# Append the data in the spreadsheet, including a timestamp
 	try:
 		worksheet.append_row((datetime.datetime.now(), temp, humidity))

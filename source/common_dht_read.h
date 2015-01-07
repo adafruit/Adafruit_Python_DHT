@@ -34,6 +34,7 @@
 #define DHT11 11
 #define DHT22 22
 #define AM2302 22
+#define AM2321 22
 
 // Busy wait delay for most accurate timing, but high CPU usage.
 // Only use this for short periods of time (a few hundred milliseconds at most)!

@@ -26,8 +26,8 @@ else:
 # Pick the right extension to compile based on the platform.
 extensions = []
 if platform == platform_detect.RASPBERRY_PI:
-	extensions.append(Extension("Adafruit_DHT.Raspberry_Pi_Driver", 
-								["source/_Raspberry_Pi_Driver.c", "source/common_dht_read.c", "source/Raspberry_Pi/pi_dht_read.c", "source/Raspberry_Pi/pi_mmio.c"], 
+	extensions.append(Extension("Adafruit_DHT.Raspberry_Pi_Driver",
+								["source/_Raspberry_Pi_Driver.c", "source/common_dht_read.c", "source/Raspberry_Pi/pi_dht_read.c", "source/Raspberry_Pi/pi_mmio.c"],
 								libraries=['rt'],
 								extra_compile_args=['-std=gnu99']))
 elif platform == platform_detect.BEAGLEBONE_BLACK:
@@ -48,7 +48,7 @@ setup(name              = 'Adafruit_DHT',
 	  version           = '1.0.0',
 	  author            = 'Tony DiCola',
 	  author_email      = 'tdicola@adafruit.com',
-	  description       = 'Library to get readings from the DHT11, DHT22, and AM2302 humidity and temperature sensors on a Raspberry Pi or Beaglebone Black.',
+	  description       = 'Library to get readings from the DHT11, DHT22, AM2302 and AM2321 humidity and temperature sensors on a Raspberry Pi or Beaglebone Black.',
 	  license           = 'MIT',
 	  url               = 'https://github.com/adafruit/Adafruit_Python_DHT/',
 	  packages          = find_packages(),

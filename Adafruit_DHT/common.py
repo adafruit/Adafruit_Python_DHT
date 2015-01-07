@@ -35,7 +35,8 @@ TRANSIENT_ERRORS = [DHT_ERROR_CHECKSUM, DHT_ERROR_TIMEOUT]
 DHT11  = 11
 DHT22  = 22
 AM2302 = 22
-SENSORS = [DHT11, DHT22, AM2302]
+AM2321 = 22
+SENSORS = [DHT11, DHT22, AM2302, AM2321]
 
 
 def get_platform():
@@ -51,8 +52,8 @@ def get_platform():
 		raise RuntimeError('Unknown platform.')
 
 def read(sensor, pin, platform=None):
-	"""Read DHT sensor of specified sensor type (DHT11, DHT22, or AM2302) on 
-	specified pin and return a tuple of humidity (as a floating point value
+	"""Read DHT sensor of specified sensor type (DHT11, DHT22, AM2302, or AM2321)
+	on specified pin and return a tuple of humidity (as a floating point value
 	in percent) and temperature (as a floating point value in Celsius). Note that
 	because the sensor requires strict timing to read and Linux is not a real
 	time OS, a result is not guaranteed to be returned!  In some cases this will
@@ -69,11 +70,11 @@ def read(sensor, pin, platform=None):
 	return platform.read(sensor, pin)
 
 def read_retry(sensor, pin, retries=15, delay_seconds=2, platform=None):
-	"""Read DHT sensor of specified sensor type (DHT11, DHT22, or AM2302) on 
-	specified pin and return a tuple of humidity (as a floating point value
+	"""Read DHT sensor of specified sensor type (DHT11, DHT22, AM2302, or AM2321)
+	on specified pin and return a tuple of humidity (as a floating point value
 	in percent) and temperature (as a floating point value in Celsius).
 	Unlike the read function, this read_retry function will attempt to read
-	multiple times (up to the specified max retries) until a good reading can be 
+	multiple times (up to the specified max retries) until a good reading can be
 	found. If a good reading cannot be found after the amount of retries, a tuple
 	of (None, None) is returned. The delay between retries is by default 2
 	seconds, but can be overridden.
