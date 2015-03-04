@@ -29,7 +29,9 @@ DHT_ERROR_TIMEOUT  = -1
 DHT_ERROR_CHECKSUM = -2
 DHT_ERROR_ARGUMENT = -3
 DHT_ERROR_GPIO     = -4
-TRANSIENT_ERRORS = [DHT_ERROR_CHECKSUM, DHT_ERROR_TIMEOUT]
+DHT_ERROR_TIMEOUT2 = -5
+DHT_ERROR_TIMEOUT3 = -6
+TRANSIENT_ERRORS = [DHT_ERROR_CHECKSUM, DHT_ERROR_TIMEOUT, DHT_ERROR_TIMEOUT2, DHT_ERROR_TIMEOUT3]
 
 # Define sensor type constants.
 DHT11  = 11
@@ -87,8 +89,12 @@ def read_retry(sensor, pin, retries=15, delay_seconds=2, platform=None):
 	seconds, but can be overridden.
 	"""
 	for i in range(retries):
-		humidity, temperature = read(sensor, pin, platform)
+		answer = read(sensor, pin, platform)
+		humidity = answer[0]
+		temperature = answer[1]
+		result = answer[2]
+		debug = answer[3]
 		if humidity is not None and temperature is not None:
-			return (humidity, temperature)
+			return (humidity, temperature, result, debug)
 		time.sleep(delay_seconds)
-	return (None, None)
+	return (None, None, result, debug)

@@ -35,7 +35,7 @@
 // the data afterwards.
 #define DHT_PULSES 41
 
-int pi_dht_read(int type, int pin, float* humidity, float* temperature) {
+int pi_dht_read(int type, int pin, float* humidity, float* temperature, uint8_t* data) {
   // Validate humidity and temperature arguments and set them to zero.
   if (humidity == NULL || temperature == NULL) {
     return DHT_ERROR_ARGUMENT;
@@ -92,7 +92,7 @@ int pi_dht_read(int type, int pin, float* humidity, float* temperature) {
       if (++pulseCounts[i] >= DHT_MAXCOUNT) {
         // Timeout waiting for response.
         set_default_priority();
-        return DHT_ERROR_TIMEOUT;
+        return DHT_ERROR_TIMEOUT2;
       }
     }
     // Count how long pin is high and store in pulseCounts[i+1]
@@ -100,7 +100,7 @@ int pi_dht_read(int type, int pin, float* humidity, float* temperature) {
       if (++pulseCounts[i+1] >= DHT_MAXCOUNT) {
         // Timeout waiting for response.
         set_default_priority();
-        return DHT_ERROR_TIMEOUT;
+        return DHT_ERROR_TIMEOUT3;
       }
     }
   }
@@ -121,7 +121,6 @@ int pi_dht_read(int type, int pin, float* humidity, float* temperature) {
   // Interpret each high pulse as a 0 or 1 by comparing it to the 50us reference.
   // If the count is less than 50us it must be a ~28us 0 pulse, and if it's higher
   // then it must be a ~70us 1 pulse.
-  uint8_t data[5] = {0};
   for (int i=3; i < DHT_PULSES*2; i+=2) {
     int index = (i-3)/16;
     data[index] <<= 1;
@@ -131,9 +130,6 @@ int pi_dht_read(int type, int pin, float* humidity, float* temperature) {
     }
     // Else zero bit for short pulse.
   }
-
-  // Useful debug info:
-  //printf("Data: 0x%x 0x%x 0x%x 0x%x 0x%x\n", data[0], data[1], data[2], data[3], data[4]);
 
   // Verify checksum of received data.
   if (data[4] == ((data[0] + data[1] + data[2] + data[3]) & 0xFF)) {

@@ -26,13 +26,17 @@ def read(sensor, pin):
 	if pin is None or int(pin) < 0 or int(pin) > 31:
 		raise ValueError('Pin must be a valid GPIO number 0 to 31.')
 	# Get a reading from C driver code.
-	result, humidity, temp = driver.read(sensor, int(pin))
+	answer = driver.read(sensor, int(pin))
+	result = answer[0]
+	humidity = answer[1]
+	temperature = answer[2]
+	debug = answer[3]
 	if result in common.TRANSIENT_ERRORS:
 		# Signal no result could be obtained, but the caller can retry.
-		return (None, None)
+		return (None, None, result, debug)
 	elif result == common.DHT_ERROR_GPIO:
 		raise RuntimeError('Error accessing GPIO. Make sure program is run as root with sudo!')
 	elif result != common.DHT_SUCCESS:
 		# Some kind of error occured.
 		raise RuntimeError('Error calling DHT test driver read: {0}'.format(result))
-	return (humidity, temp)
+	return (humidity, temperature, result, debug)

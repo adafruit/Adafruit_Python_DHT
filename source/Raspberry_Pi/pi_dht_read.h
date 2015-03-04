@@ -27,6 +27,6 @@
 // returned in the provided parameters. If a successfull reading could be made a value of 0 
 // (DHT_SUCCESS) will be returned.  If there was an error reading the sensor a negative value will
 // be returned.  Some errors can be ignored and retried, specifically DHT_ERROR_TIMEOUT or DHT_ERROR_CHECKSUM.
-int pi_dht_read(int sensor, int pin, float* humidity, float* temperature);
+int pi_dht_read(int sensor, int pin, float* humidity, float* temperature, uint8_t* data);
 
 #endif

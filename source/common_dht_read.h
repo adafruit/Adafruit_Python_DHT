@@ -28,6 +28,8 @@
 #define DHT_ERROR_CHECKSUM -2
 #define DHT_ERROR_ARGUMENT -3
 #define DHT_ERROR_GPIO -4
+#define DHT_ERROR_TIMEOUT2 -5
+#define DHT_ERROR_TIMEOUT3 -6
 #define DHT_SUCCESS 0
 
 // Define sensor types.

@@ -32,8 +32,10 @@ static PyObject* Raspberry_Pi_Driver_read(PyObject *self, PyObject *args)
     }
     // Call dht_read and return result code, humidity, and temperature.
     float humidity = 0, temperature = 0;
-    int result = pi_dht_read(sensor, pin, &humidity, &temperature);
-    return Py_BuildValue("iff", result, humidity, temperature);
+    uint8_t data[5] = {0};
+    int result = pi_dht_read(sensor, pin, &humidity, &temperature, &data);
+    PyObject* pdata = Py_BuildValue("iiiii", (int)data[0], (int)data[1], (int)data[2], (int)data[3], (int)data[4]);
+    return Py_BuildValue("iffO", result, humidity, temperature, pdata);
 }
 
 // Boilerplate python module method list and initialization functions below.
