@@ -37,13 +37,13 @@ if platform == platform_detect.RASPBERRY_PI:
 		pi_version = platform_detect.pi_version()
 	# Build the right extension depending on the Pi version.
 	if pi_version == 1:
-		extensions.append(Extension("Adafruit_DHT.Raspberry_Pi_Driver", 
-									["source/_Raspberry_Pi_Driver.c", "source/common_dht_read.c", "source/Raspberry_Pi/pi_dht_read.c", "source/Raspberry_Pi/pi_mmio.c"], 
+		extensions.append(Extension("Adafruit_DHT.Raspberry_Pi_Driver",
+									["source/_Raspberry_Pi_Driver.c", "source/common_dht_read.c", "source/Raspberry_Pi/pi_dht_read.c", "source/Raspberry_Pi/pi_mmio.c"],
 									libraries=['rt'],
 									extra_compile_args=['-std=gnu99']))
 	elif pi_version == 2:
-		extensions.append(Extension("Adafruit_DHT.Raspberry_Pi_2_Driver", 
-									["source/_Raspberry_Pi_2_Driver.c", "source/common_dht_read.c", "source/Raspberry_Pi_2/pi_2_dht_read.c", "source/Raspberry_Pi_2/pi_2_mmio.c"], 
+		extensions.append(Extension("Adafruit_DHT.Raspberry_Pi_2_Driver",
+									["source/_Raspberry_Pi_2_Driver.c", "source/common_dht_read.c", "source/Raspberry_Pi_2/pi_2_dht_read.c", "source/Raspberry_Pi_2/pi_2_mmio.c"],
 									libraries=['rt'],
 									extra_compile_args=['-std=gnu99']))
 	else:
@@ -63,11 +63,11 @@ else:
 
 # Call setuptools setup function to install package.
 setup(name              = 'Adafruit_DHT',
-	  version           = '1.1.0',
-	  author            = 'Tony DiCola',
-	  author_email      = 'tdicola@adafruit.com',
-	  description       = 'Library to get readings from the DHT11, DHT22, and AM2302 humidity and temperature sensors on a Raspberry Pi or Beaglebone Black.',
-	  license           = 'MIT',
-	  url               = 'https://github.com/adafruit/Adafruit_Python_DHT/',
-	  packages          = find_packages(),
-	  ext_modules       = extensions)
+      version           = '1.1.0',
+      author            = 'Tony DiCola',
+      author_email      = 'tdicola@adafruit.com',
+      description       = 'Library to get readings from the DHT11, DHT22, and AM2302 humidity and temperature sensors on a Raspberry Pi or Beaglebone Black.',
+      license           = 'MIT',
+      url               = 'https://github.com/adafruit/Adafruit_Python_DHT/',
+      packages          = find_packages(),
+      ext_modules       = extensions)
