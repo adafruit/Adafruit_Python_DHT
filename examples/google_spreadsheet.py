@@ -2,9 +2,9 @@
 
 # Google Spreadsheet DHT Sensor Data-logging Example
 
-# Depends on the 'gspread' package being installed.  If you have pip installed
-# execute:
-#   sudo pip install gspread
+# Depends on the 'gspread' and 'oauth2client' package being installed.  If you 
+# have pip installed execute:
+#   sudo pip install gspread oauth2client
 
 # Copyright (c) 2014 Adafruit Industries
 # Author: Tony DiCola
@@ -26,12 +26,14 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
+import json
 import sys
 import time
 import datetime
 
 import Adafruit_DHT
 import gspread
+from oauth2client.client import SignedJwtAssertionCredentials
 
 # Type of sensor, can be Adafruit_DHT.DHT11, Adafruit_DHT.DHT22, or Adafruit_DHT.AM2302.
 DHT_TYPE = Adafruit_DHT.DHT22
@@ -41,23 +43,46 @@ DHT_PIN  = 23
 # Example of sensor connected to Beaglebone Black pin P8_11
 #DHT_PIN  = 'P8_11'
 
-# Google Docs account email, password, and spreadsheet name.
-GDOCS_EMAIL            = 'your google docs account email address'
-GDOCS_PASSWORD         = 'your google docs account password'
+# Google Docs OAuth credential JSON file.  Note that the process for authenticating
+# with Google docs has changed as of ~April 2015.  You _must_ use OAuth2 to log
+# in and authenticate with the gspread library.  Unfortunately this process is much
+# more complicated than the old process.  You _must_ carefully follow the steps on
+# this page to create a new OAuth service in your Google developer console:
+#   http://gspread.readthedocs.org/en/latest/oauth2.html
+#
+# Once you've followed the steps above you should have downloaded a .json file with
+# your OAuth2 credentials.  This file has a name like SpreadsheetData-<gibberish>.json.
+# Place that file in the same directory as this python script.
+#
+# Now one last _very important_ step before updating the spreadsheet will work.
+# Go to your spreadsheet in Google Spreadsheet and share it to the email address
+# inside the 'client_email' setting in the SpreadsheetData-*.json file.  For example
+# if the client_email setting inside the .json file has an email address like:
+#   149345334675-md0qff5f0kib41meu20f7d1habos3qcu@developer.gserviceaccount.com
+# Then use the File -> Share... command in the spreadsheet to share it with read
+# and write acess to the email address above.  If you don't do this step then the
+# updates to the sheet will fail!
+GDOCS_OAUTH_JSON       = 'your SpreadsheetData-*.json file name'
+
+# Google Docs spreadsheet name.
 GDOCS_SPREADSHEET_NAME = 'your google docs spreadsheet name'
 
 # How long to wait (in seconds) between measurements.
 FREQUENCY_SECONDS      = 30
 
 
-def login_open_sheet(email, password, spreadsheet):
+def login_open_sheet(oauth_key_file, spreadsheet):
 	"""Connect to Google Docs spreadsheet and return the first worksheet."""
 	try:
-		gc = gspread.login(email, password)
+		json_key = json.load(open(oauth_key_file))
+		credentials = SignedJwtAssertionCredentials(json_key['client_email'], 
+													json_key['private_key'], 
+													['https://spreadsheets.google.com/feeds'])
+		gc = gspread.authorize(credentials)
 		worksheet = gc.open(spreadsheet).sheet1
 		return worksheet
 	except:
-		print 'Unable to login and get spreadsheet.  Check email, password, spreadsheet name.'
+		print 'Unable to login and get spreadsheet.  Check OAuth credentials, spreadsheet name, and make sure spreadsheet is shared to the client_email address in the OAuth .json file!'
 		sys.exit(1)
 
 
@@ -67,7 +92,7 @@ worksheet = None
 while True:
 	# Login if necessary.
 	if worksheet is None:
-		worksheet = login_open_sheet(GDOCS_EMAIL, GDOCS_PASSWORD, GDOCS_SPREADSHEET_NAME)
+		worksheet = login_open_sheet(GDOCS_OAUTH_JSON, GDOCS_SPREADSHEET_NAME)
 
 	# Attempt to get sensor reading.
 	humidity, temp = Adafruit_DHT.read(DHT_TYPE, DHT_PIN)
