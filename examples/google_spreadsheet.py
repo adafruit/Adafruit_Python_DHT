@@ -6,6 +6,13 @@
 # have pip installed execute:
 #   sudo pip install gspread oauth2client
 
+# Also it's _very important_ on the Raspberry Pi to install the python-openssl
+# package because the version of Python is a bit old and can fail with Google's
+# new OAuth2 based authentication.  Run the following command to install the
+# the package:
+#   sudo apt-get update
+#   sudo apt-get install python-openssl
+
 # Copyright (c) 2014 Adafruit Industries
 # Author: Tony DiCola
 
