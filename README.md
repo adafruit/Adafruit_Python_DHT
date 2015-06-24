@@ -1,3 +1,12 @@
+Fork for Python3
+================
+
+Testing environnement:
+Python 3.4.3
+Raspberry Pi 2 Model B
+DHT22 sensor
+
+
 Adafruit Python DHT Sensor Library
 ==================================
 
