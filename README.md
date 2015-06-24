@@ -1,13 +1,3 @@
-Fork for Python3
-================
-
-Testing environnement:
-
-*Python 3.4.3
-*Raspberry Pi 2 Model B
-*DHT22 sensor
-
-
 Adafruit Python DHT Sensor Library
 ==================================
 
@@ -37,3 +27,12 @@ Adafruit invests time and resources providing this open source code, please supp
 Written by Tony DiCola for Adafruit Industries.
 
 MIT license, all text above must be included in any redistribution
+
+
+Fork for Python3
+----------------
+Testing environnement:
+
++ Python 3.4.3
++ Raspberry Pi 2 Model B
++ DHT22 sensor
