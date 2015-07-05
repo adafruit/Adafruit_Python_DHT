@@ -31,7 +31,7 @@ sensor = Adafruit_DHT.DHT22
 pin = 'P8_11'
 
 # Example using a Raspberry Pi with DHT sensor
-# connected to pin 23.
+# connected to GPIO23.
 #pin = 23
 
 # Try to grab a sensor reading.  Use the read_retry method which will retry up
