@@ -18,8 +18,8 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-import common
-import Test_Driver as driver
+import Adafruit_DHT.common as common
+import Adafruit_DHT.Test_Driver as driver
 
 def read(sensor, pin):
 	# Get a reading from C driver code.

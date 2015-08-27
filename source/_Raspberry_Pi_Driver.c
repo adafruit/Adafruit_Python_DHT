@@ -43,7 +43,37 @@ static PyMethodDef module_methods[] = {
     {NULL, NULL, 0, NULL}
 };
 
+#if PY_MAJOR_VERSION >= 3
+static struct PyModuleDef moduledef = {
+	PyModuleDef_HEAD_INIT,
+	"Raspberry_Pi_Driver",
+	"Adafruit_Python_DHT.RasberryPi",
+	-1,
+	module_methods,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+};
+#endif
+
+#if PY_MAJOR_VERSION >= 3
+PyMODINIT_FUNC PyInit_Raspberry_Pi_Driver(void)
+#else
 PyMODINIT_FUNC initRaspberry_Pi_Driver(void)
+#endif
+
 {
-    Py_InitModule("Raspberry_Pi_Driver", module_methods);
+#if PY_MAJOR_VERSION >= 3
+	PyObject * m = PyModule_Create(&moduledef);
+#else
+	Py_InitModule("Raspberry_Pi_Driver", module_methods);
+#endif
+
+#if PY_MAJOR_VERSION >= 3
+	if (m == NULL)
+		return NULL;
+	else
+		return m;
+#endif
 }

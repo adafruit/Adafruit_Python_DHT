@@ -1,5 +1,18 @@
+Fork for Python3 support
+========================
+Testing environnement:
+
++ [Archlinux ARM](http://archlinuxarm.org)
++ Python 3.4.3
++ Python 2.7.10
++ Raspberry Pi 2 Model B
++ DHT22 sensor
+
+A example module is present in examples/dht22.py
+
+
 Adafruit Python DHT Sensor Library
-==================================
+----------------------------------
 
 Python library to read the DHT series of humidity and temperature sensors on a Raspberry Pi or Beaglebone Black.
 
