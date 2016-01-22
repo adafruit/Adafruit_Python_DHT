@@ -38,6 +38,29 @@ static PyObject* Raspberry_Pi_Driver_read(PyObject *self, PyObject *args)
 
 // Boilerplate python module method list and initialization functions below.
 
+#if PY_MAJOR_VERSION >= 3
+
+static PyMethodDef module_methods[] = {
+    {"read", Raspberry_Pi_Driver_read, METH_VARARGS, "Read DHT sensor value on a Raspberry Pi."},
+    {NULL, NULL, 0, NULL}
+};
+
+static struct PyModuleDef raspberry_pi_module = {
+   PyModuleDef_HEAD_INIT,
+   "Raspberry_Pi_Driver",
+   NULL,
+   -1,
+   module_methods
+};
+
+PyMODINIT_FUNC
+PyInit_Raspberry_Pi_Driver(void)
+{
+    return PyModule_Create(&raspberry_pi_module);
+}
+
+#else
+
 static PyMethodDef module_methods[] = {
     {"read", Raspberry_Pi_Driver_read, METH_VARARGS, "Read DHT sensor value on a Raspberry Pi."},
     {NULL, NULL, 0, NULL}
@@ -47,3 +70,5 @@ PyMODINIT_FUNC initRaspberry_Pi_Driver(void)
 {
     Py_InitModule("Raspberry_Pi_Driver", module_methods);
 }
+
+#endif
