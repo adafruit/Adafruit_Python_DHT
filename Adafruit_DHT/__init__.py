@@ -18,4 +18,6 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-from common import DHT11, DHT22, AM2302, read, read_retry
+from __future__ import absolute_import
+
+from .common import DHT11, DHT22, AM2302, read, read_retry
