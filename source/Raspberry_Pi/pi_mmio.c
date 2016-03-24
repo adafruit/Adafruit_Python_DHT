@@ -37,9 +37,9 @@ volatile uint32_t* pi_mmio_gpio = NULL;
 
 int pi_mmio_init(void) {
   if (pi_mmio_gpio == NULL) {
-    int fd = open("/dev/mem", O_RDWR | O_SYNC);
+    int fd = open("/dev/gpiomem", O_RDWR | O_SYNC);
     if (fd == -1) {
-      // Error opening /dev/mem.  Probably not running as root.
+      // Error opening /dev/gpiomem.
       return MMIO_ERROR_DEVMEM;
     }
     // Map GPIO memory to location in process space.
