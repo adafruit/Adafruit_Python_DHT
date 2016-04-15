@@ -43,7 +43,31 @@ static PyMethodDef module_methods[] = {
     {NULL, NULL, 0, NULL}
 };
 
+#if PY_MAJOR_VERSION > 2
+static struct PyModuleDef test_dht_module = {
+    PyModuleDef_HEAD_INIT,
+    "Test_Driver",           // name of module
+    NULL,                    // module documentation, may be NULL
+    -1,                      // size of per-interpreter state of the module, or -1 if the module keeps state in global variables.
+    module_methods
+};
+#endif
+
+#if PY_MAJOR_VERSION > 2
+PyMODINIT_FUNC PyInit_Test_Driver(void)
+#else
 PyMODINIT_FUNC initTest_Driver(void)
+#endif
 {
-    Py_InitModule("Test_Driver", module_methods);
+    #if PY_MAJOR_VERSION > 2
+      PyObject* module = PyModule_Create(&test_dht_module);
+    #else
+      Py_InitModule("Test_Driver", module_methods);
+    #endif
+
+    #if PY_MAJOR_VERSION > 2
+       return module;
+    #else
+       return;
+    #endif
 }
