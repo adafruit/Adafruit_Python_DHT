@@ -60,7 +60,7 @@ int pi_2_dht_read(int type, int pin, float* humidity, float* temperature) {
 
   // Set pin high for ~500 milliseconds.
   pi_2_mmio_set_high(pin);
-  sleep_milliseconds(500);
+  sleep_milliseconds(2000);
 
   // The next calls are timing critical and care should be taken
   // to ensure no unnecssary work is done below.
@@ -72,7 +72,7 @@ int pi_2_dht_read(int type, int pin, float* humidity, float* temperature) {
   // Set pin at input.
   pi_2_mmio_set_input(pin);
   // Need a very short delay before reading pins or else value is sometimes still low.
-  for (volatile int i = 0; i < 50; ++i) {
+  for (volatile int i = 0; i < 100; ++i) {
   }
 
   // Wait for DHT to pull pin low.
