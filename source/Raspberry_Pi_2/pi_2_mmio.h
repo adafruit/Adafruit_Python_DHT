@@ -31,7 +31,7 @@
 #define MMIO_ERROR_MMAP -2
 #define MMIO_ERROR_OFFSET -3
 
-volatile uint32_t* pi_2_mmio_gpio;
+extern volatile uint32_t* pi_2_mmio_gpio;
 
 int pi_2_mmio_init(void);
 
