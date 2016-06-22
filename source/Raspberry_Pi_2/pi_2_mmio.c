@@ -53,9 +53,9 @@ int pi_2_mmio_init(void) {
     uint32_t gpio_base = peri_base + GPIO_BASE_OFFSET;
     fclose(fp);
 
-    int fd = open("/dev/mem", O_RDWR | O_SYNC);
+    int fd = open("/dev/gpiomem", O_RDWR | O_SYNC);
     if (fd == -1) {
-      // Error opening /dev/mem.  Probably not running as root.
+      // Error opening /dev/gpiomem.
       return MMIO_ERROR_DEVMEM;
     }
     // Map GPIO memory to location in process space.
