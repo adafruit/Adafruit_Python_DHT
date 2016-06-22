@@ -19,7 +19,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 from . import common
-import .Test_Driver as driver
+from . import Test_Driver as driver
 
 def read(sensor, pin):
     # Get a reading from C driver code.
