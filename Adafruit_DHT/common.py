@@ -50,6 +50,10 @@ def get_platform():
         elif version == 2:
             from . import Raspberry_Pi_2
             return Raspberry_Pi_2
+        elif version == 3:
+            """Use Pi 2 driver even though running on Pi 3"""
+            from . import Raspberry_Pi_2
+            return Raspberry_Pi_2
         else:
             raise RuntimeError('No driver for detected Raspberry Pi version available!')
     elif plat == platform_detect.BEAGLEBONE_BLACK:
