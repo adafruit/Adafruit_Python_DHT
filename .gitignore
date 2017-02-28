@@ -3,4 +3,5 @@ build
 *.pyc
 setuptools-*
 *.so
+dist
 
