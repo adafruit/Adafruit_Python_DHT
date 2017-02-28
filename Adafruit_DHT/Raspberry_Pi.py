@@ -31,7 +31,9 @@ def read(sensor, pin):
         # Signal no result could be obtained, but the caller can retry.
         return (None, None)
     elif result == common.DHT_ERROR_GPIO:
-        raise RuntimeError('Error accessing GPIO.')
+        raise RuntimeError(
+            'Error accessing GPIO. If `/dev/gpiomem` does not exist '
+            'run this program as root or sudo.')
     elif result != common.DHT_SUCCESS:
         # Some kind of error occured.
         raise RuntimeError('Error calling DHT test driver read: {0}'.format(result))
