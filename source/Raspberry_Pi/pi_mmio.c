@@ -33,7 +33,7 @@
 #define GPIO_BASE (BASE + 0x200000)
 #define GPIO_LENGTH 4096
 
-volatile uint32_t* pi_mmio_gpio = NULL;
+
 
 int pi_mmio_init(void) {
   if (pi_mmio_gpio == NULL) {
