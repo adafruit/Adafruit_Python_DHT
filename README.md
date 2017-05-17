@@ -10,7 +10,7 @@ Currently the library is only tested with Python 2.6/2.7.
 For all platforms (Raspberry Pi and Beaglebone Black) make sure your system is able to compile Python extensions.  On Raspbian or Beaglebone Black's Debian/Ubuntu image you can ensure your system is ready by executing:
 
 ````
-apt-get update
+sudo apt-get update
 sudo apt-get install build-essential python-dev
 ````
 
@@ -19,6 +19,7 @@ Install the library by downloading with the download link on the right, unzippin
 ````
 sudo python setup.py install
 ````
+You can ommit the sudo if you use raspberry pi.
 
 See example of usage in the examples folder.
 

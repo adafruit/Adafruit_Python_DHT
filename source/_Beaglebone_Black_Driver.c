@@ -43,7 +43,31 @@ static PyMethodDef module_methods[] = {
     {NULL, NULL, 0, NULL}
 };
 
+#if PY_MAJOR_VERSION > 2
+static struct PyModuleDef bbb_dht_module = {
+    PyModuleDef_HEAD_INIT,
+    "Beaglebone_Black_Driver",   // name of module
+    NULL,                      // module documentation, may be NULL
+    -1,                        // size of per-interpreter state of the module, or -1 if the module keeps state in global variables.
+    module_methods
+};
+#endif
+
+#if PY_MAJOR_VERSION > 2
+PyMODINIT_FUNC PyInit_Beaglebone_Black_Driver(void)
+#else
 PyMODINIT_FUNC initBeaglebone_Black_Driver(void)
+#endif
 {
-    Py_InitModule("Beaglebone_Black_Driver", module_methods);
+    #if PY_MAJOR_VERSION > 2
+      PyObject* module = PyModule_Create(&bbb_dht_module);
+    #else
+      Py_InitModule("Beaglebone_Black_Driver", module_methods);
+    #endif
+
+    #if PY_MAJOR_VERSION > 2
+       return module;
+    #else
+       return;
+    #endif
 }
