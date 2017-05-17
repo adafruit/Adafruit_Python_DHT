@@ -95,13 +95,13 @@ def pi_version():
     if not match:
         # Couldn't find the hardware, assume it isn't a pi.
         return None
-    if match.group(1) == 'BCM2708':
+    if match.group(1) == 'BCM2835':
         # Pi 1
         return 1
-    elif match.group(1) == 'BCM2709':
+    elif match.group(1) == 'BCM2836':
         # Pi 2
         return 2
-    elif match.group(1) == 'BCM2835':
+    elif match.group(1) == 'BCM2837':
         # Pi 3
         return 3
     else:
