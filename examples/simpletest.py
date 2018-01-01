@@ -21,28 +21,46 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 import Adafruit_DHT
+import argparse
 
 # Sensor should be set to Adafruit_DHT.DHT11,
 # Adafruit_DHT.DHT22, or Adafruit_DHT.AM2302.
-sensor = Adafruit_DHT.DHT22
+sensor_map = {
+    'dht11': Adafruit_DHT.DHT11,
+    'dht22': Adafruit_DHT.DHT22,
+    'am2302': Adafruit_DHT.AM2302,
+}
 
-# Example using a Beaglebone Black with DHT sensor
-# connected to pin P8_11.
-pin = 'P8_11'
+def read_sensor(sensor, pin):
+    # Try to grab a sensor reading.  Use the read_retry method which will retry up
+    # to 15 times to get a sensor reading (waiting 2 seconds between each retry).
+    humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
 
-# Example using a Raspberry Pi with DHT sensor
-# connected to GPIO23.
-#pin = 23
+    # Note that sometimes you won't get a reading and
+    # the results will be null (because Linux can't
+    # guarantee the timing of calls to read the sensor).
+    # If this happens try again!
+    if humidity is not None and temperature is not None:
+        print('Temp={0:0.1f}*C  Humidity={1:0.1f}%'.format(temperature, humidity))
+    else:
+        print('Failed to get reading. Try again!')
 
-# Try to grab a sensor reading.  Use the read_retry method which will retry up
-# to 15 times to get a sensor reading (waiting 2 seconds between each retry).
-humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
 
-# Note that sometimes you won't get a reading and
-# the results will be null (because Linux can't
-# guarantee the timing of calls to read the sensor).
-# If this happens try again!
-if humidity is not None and temperature is not None:
-    print('Temp={0:0.1f}*C  Humidity={1:0.1f}%'.format(temperature, humidity))
-else:
-    print('Failed to get reading. Try again!')
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Read sensors from DHT22/DHT11/AM2302')
+    parser.add_argument('--sensor', default='dht22', help="Sensor type. One of 'dht11', 'dht22', 'am2302' (default: dht22)")
+    parser.add_argument('--pin', default=17, help="Pin for sensor (e.g. 'P8_11' for Beaglebone Black, '17' for Raspberry Pi GPIO17) (default=17)")
+
+    args = parser.parse_args()
+
+    if args.sensor not in ['dht11', 'dht22', 'am2302']:
+        print "Must specify one of 'dht11', 'dht22', am2302. You specified: %s" % (args.sensor)
+
+    # Attempt to set the pin to an integer for Raspberry Pi GPIO values.
+    pin = ''
+    try:
+        pin = int(args.pin)
+    except ValueError:
+        pin = args.pin
+
+    read_sensor(sensor_map[args.sensor], pin)
