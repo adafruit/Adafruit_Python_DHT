@@ -96,3 +96,15 @@ def read_retry(sensor, pin, retries=15, delay_seconds=2, platform=None):
             return (humidity, temperature)
         time.sleep(delay_seconds)
     return (None, None)
+
+def read_retry_multi(sensor, pin, retries=15, delay_seconds=2, platform=None, num_reads=5):
+    """Reads sensor using "read_retry" multiple times (num_reads) and returns
+    data as a list"""
+    data_list = []
+    while len(data_list) < num_reads:
+        humidity, temperature = read_retry(sensor, pin, retries, delay_seconds, platform)
+        if humidity is not None and temperature is not None:
+            TempHum = (humidity, temperature)
+            data_list.append(TempHum)
+
+    return data_list
