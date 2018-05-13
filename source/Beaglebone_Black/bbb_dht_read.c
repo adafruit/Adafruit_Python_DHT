@@ -33,7 +33,7 @@
 // Number of bit pulses to expect from the DHT.  Note that this is 41 because
 // the first pulse is a constant 50 microsecond pulse, with 40 pulses to represent
 // the data afterwards.
-#define DHT_PULSES 41
+#define DHT_PULSES 42
 
 int bbb_dht_read(int type, int gpio_base, int gpio_number, float* humidity, float* temperature) {
   // Validate humidity and temperature arguments and set them to zero.
@@ -118,8 +118,8 @@ int bbb_dht_read(int type, int gpio_base, int gpio_number, float* humidity, floa
   // If the count is less than 50us it must be a ~28us 0 pulse, and if it's higher
   // then it must be a ~70us 1 pulse.
   uint8_t data[5] = {0};
-  for (int i=3; i < DHT_PULSES*2; i+=2) {
-    int index = (i-3)/16;
+  for (int i=5; i < DHT_PULSES*2; i+=2) {
+    int index = (i-5)/16;
     data[index] <<= 1;
     if (pulseCounts[i] >= threshold) {
       // One bit for long pulse.
