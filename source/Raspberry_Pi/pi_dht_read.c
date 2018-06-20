@@ -72,7 +72,7 @@ int pi_dht_read(int type, int pin, float* humidity, float* temperature) {
   // Set pin at input.
   pi_mmio_set_input(pin);
   // Need a very short delay before reading pins or else value is sometimes still low.
-  for (volatile int i = 0; i < 50; ++i) {
+  for (volatile int i = 0; i < 500; ++i) {
   }
 
   // Wait for DHT to pull pin low.
