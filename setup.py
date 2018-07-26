@@ -7,10 +7,31 @@ except ImportError:
     pass
 
 from setuptools import setup, find_packages, Extension
+import os
 import sys
 
 import Adafruit_DHT.platform_detect as platform_detect
 
+
+BINARY_COMMANDS = [
+    'build_ext',
+    'build_clib',
+    'bdist',
+    'bdist_dumb',
+    'bdist_rpm',
+    'bdist_wininst',
+    'bdist_wheel',
+    'install'
+]
+
+
+def is_binary_install():
+    do_binary = [command for command in BINARY_COMMANDS if command in sys.argv]
+    return len(do_binary) > 0
+
+
+def read(fname):
+    return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 # Check if an explicit platform was chosen with a command line parameter.
 # Kind of hacky to manipulate the argument list before calling setup, but it's
@@ -37,7 +58,9 @@ else:
 
 # Pick the right extension to compile based on the platform.
 extensions = []
-if platform == platform_detect.RASPBERRY_PI:
+if not is_binary_install():
+    print('Skipped loading platform-specific extensions for Adafruit_DHT (we are generating a cross-platform source distribution).')
+elif platform == platform_detect.RASPBERRY_PI:
     # Get the Pi version (1 or 2)
     if pi_version is None:
         pi_version = platform_detect.pi_version()
@@ -87,6 +110,7 @@ setup(name              = 'Adafruit_DHT',
       author            = 'Tony DiCola',
       author_email      = 'tdicola@adafruit.com',
       description       = 'Library to get readings from the DHT11, DHT22, and AM2302 humidity and temperature sensors on a Raspberry Pi or Beaglebone Black.',
+      long_description  = read('README.md'),
       license           = 'MIT',
       classifiers       = classifiers,
       url               = 'https://github.com/adafruit/Adafruit_Python_DHT/',
