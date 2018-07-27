@@ -19,7 +19,7 @@ Install the library by downloading with the download link on the right, unzippin
 ````
 sudo python setup.py install
 ````
-You can ommit the sudo if you use raspberry pi.
+You can omit the sudo if you use Raspberry Pi.
 
 See example of usage in the examples folder.
 
