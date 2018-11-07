@@ -98,7 +98,7 @@ classifiers = ['Development Status :: 4 - Beta',
 
 # Call setuptools setup function to install package.
 setup(name              = 'Adafruit_DHT',
-      version           = '1.3.4',
+      version           = '1.4.0',
       author            = 'Tony DiCola',
       author_email      = 'tdicola@adafruit.com',
       description       = 'Library to get readings from the DHT11, DHT22, and AM2302 humidity and temperature sensors on a Raspberry Pi or Beaglebone Black.',
