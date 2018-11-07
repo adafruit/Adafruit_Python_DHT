@@ -97,7 +97,7 @@ classifiers = ['Development Status :: 4 - Beta',
                'Topic :: System :: Hardware']
 
 # Call setuptools setup function to install package.
-setup(name              = 'Adafruit_DHT',
+setup(name              = 'Adafruit_Python_DHT',
       version           = '1.4.0',
       author            = 'Tony DiCola',
       author_email      = 'tdicola@adafruit.com',
