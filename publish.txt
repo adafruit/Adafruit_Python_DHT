@@ -1,0 +1,21 @@
+How to publish:
+
+First, edit setup.py and change version number.
+
+rm dist/*
+python3 setup.py sdist
+twine upload dist/*
+
+git checkout 'publish_adafruit_python_dht'
+git merge master
+
+rm dist/*
+python3 setup.py sdist
+twine upload dist/*
+
+git checkout master
+
+Finally, tag:
+
+git tag -a 1.4.0
+git push --tags
