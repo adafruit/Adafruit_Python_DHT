@@ -80,14 +80,14 @@ def read(sensor, pin, platform=None):
         platform = get_platform()
     return platform.read(sensor, pin)
 
-def read_retry(sensor, pin, retries=15, delay_seconds=2, platform=None):
+def read_retry(sensor, pin, retries=15, delay_seconds=2.5, platform=None):
     """Read DHT sensor of specified sensor type (DHT11, DHT22, or AM2302) on
     specified pin and return a tuple of humidity (as a floating point value
     in percent) and temperature (as a floating point value in Celsius).
     Unlike the read function, this read_retry function will attempt to read
     multiple times (up to the specified max retries) until a good reading can be
     found. If a good reading cannot be found after the amount of retries, a tuple
-    of (None, None) is returned. The delay between retries is by default 2
+    of (None, None) is returned. The delay between retries is by default 2.5
     seconds, but can be overridden.
     """
     for i in range(retries):
