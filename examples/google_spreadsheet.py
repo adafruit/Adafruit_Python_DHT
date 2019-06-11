@@ -81,7 +81,7 @@ FREQUENCY_SECONDS      = 30
 def login_open_sheet(oauth_key_file, spreadsheet):
     """Connect to Google Docs spreadsheet and return the first worksheet."""
     try:
-        scope =  ['https://spreadsheets.google.com/feeds']
+        scope =  ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
         credentials = ServiceAccountCredentials.from_json_keyfile_name(oauth_key_file, scope)
         gc = gspread.authorize(credentials)
         worksheet = gc.open(spreadsheet).sheet1
@@ -115,7 +115,7 @@ while True:
 
     # Append the data in the spreadsheet, including a timestamp
     try:
-        worksheet.append_row((datetime.datetime.now(), temp, humidity))
+        worksheet.append_row((datetime.datetime.now().isoformat(), temp, humidity))
     except:
         # Error appending data, most likely because credentials are stale.
         # Null out the worksheet so a login is performed at the top of the loop.
