@@ -1,5 +1,13 @@
-Adafruit Python DHT Sensor Library
-==================================
+*DEPRECATED LIBRARY* Adafruit Python DHT Sensor Library
+=======================
+
+his library has been deprecated! We are leaving this up for historical and research purposes but archiving the repository.
+
+We are now only supporting the use of our CircuitPython libraries for use with Python.
+
+Check out this guide for info on using DHT sensors with the CircuitPython library: https://learn.adafruit.com/dht-humidity-sensing-on-raspberry-pi-with-gdocs-logging/python-setup
+
+---------------------------------------
 
 Python library to read the DHT series of humidity and temperature sensors on a
 Raspberry Pi or Beaglebone Black.
